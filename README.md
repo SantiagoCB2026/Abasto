@@ -27,13 +27,14 @@ npx expo start
 
 Después se escanea el código QR que sale en la terminal con Expo Go (en iPhone con la cámara). El celular y el computador tienen que estar en la misma red Wi-Fi. Si no conecta, se puede usar `npx expo start --tunnel`.
 
-### Con el emulador de Android
+### Con el emulador de Expo Snack
 
-1. Instalar Android Studio.
-2. En Device Manager crear un dispositivo virtual y encenderlo.
-3. Correr `npx expo start` y presionar la tecla `a` en la terminal. Se abre la app en el emulador.
+1. Entrar a snack.expo.dev y crear un Snack nuevo.
+2. Pegar el código de `App.js` y crear el archivo `database/productos.js` con su código.
+3. Agregar la dependencia `expo-sqlite` cuando Snack la pida (Add dependency).
+4. En el panel de la derecha elegir la pestaña Android y darle "Tap to play". La app se abre en el emulador.
 
-Nota: si se prueba en Expo Snack, hay que usar la pestaña Android o iOS, porque la base de datos no funciona en la vista Web.
+Hay que usar la pestaña Android o iOS, porque la base de datos no funciona en la vista Web.
 
 ## Cómo se usa
 
