@@ -16,25 +16,31 @@ Hecho con React Native, Expo (SDK 58), React Navigation y expo-sqlite.
 
 ## Cómo ejecutarlo
 
-Se necesita tener instalado Node.js y la app Expo Go en el celular.
+Se necesita tener instalado Node.js y la app Expo Go en el celular. Todo se hace desde la terminal (en VS Code o en CMD).
+
+1. Descargar el proyecto e instalar las dependencias:
 
 ```
 git clone https://github.com/SantiagoCB2026/Abasto.git
 cd Abasto
 npm install
+```
+
+2. Iniciar el proyecto:
+
+```
 npx expo start
 ```
 
-Después se escanea el código QR que sale en la terminal con Expo Go (en iPhone con la cámara). El celular y el computador tienen que estar en la misma red Wi-Fi. Si no conecta, se puede usar `npx expo start --tunnel`.
+3. En la terminal sale un código QR. Se abre Expo Go en el celular y se escanea (en iPhone con la cámara). La app se abre en el celular.
 
-### Con el emulador de Expo Snack
+El celular y el computador tienen que estar en la misma red Wi-Fi. Si no conecta, por ejemplo en la red de la universidad, se usa el modo túnel:
 
-1. Entrar a snack.expo.dev y crear un Snack nuevo.
-2. Pegar el código de `App.js` y crear el archivo `database/productos.js` con su código.
-3. Agregar la dependencia `expo-sqlite` cuando Snack la pida (Add dependency).
-4. En el panel de la derecha elegir la pestaña Android y darle "Tap to play". La app se abre en el emulador.
+```
+npx expo start --tunnel
+```
 
-Hay que usar la pestaña Android o iOS, porque la base de datos no funciona en la vista Web.
+Para el túnel puede pedir iniciar sesión con la cuenta de Expo (`npx expo login`). Si no, se puede usar `npx expo start --tunnel ngrok`, que instala ngrok la primera vez.
 
 ## Cómo se usa
 
