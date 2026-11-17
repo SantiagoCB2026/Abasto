@@ -8,7 +8,7 @@ Santiago Castillo Barrios.
 ## Qué tiene
 
 - Pantalla Qué pedir, con los productos que se están acabando (por ahora con datos de ejemplo).
-- Pantalla Inventario, con todos los productos y su existencia. Tiene buscador, un formulario para agregar productos y un botón para quitarlos.
+- Pantalla Inventario, con todos los productos y su existencia. Tiene buscador, un formulario para agregar productos y botones para editarlos y quitarlos.
 
 El inventario se guarda en una base de datos SQLite en el celular, así que funciona sin internet. La parte de la base de datos está en `database/productos.js` y las pantallas en `App.js`.
 
