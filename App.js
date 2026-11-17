@@ -14,6 +14,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   abrirBD,
+  actualizarProducto,
   agregarProducto,
   eliminarProducto,
   iniciarYCargarProductos,
@@ -127,6 +128,7 @@ function InventarioScreen() {
   const [nuevoNombre, setNuevoNombre] = useState('');
   const [nuevaExistencia, setNuevaExistencia] = useState('');
   const [guardando, setGuardando] = useState(false);
+  const [editandoId, setEditandoId] = useState(null); // id del producto que se está editando
 
   // Se ejecuta una sola vez, al montar la pantalla (no en cada render)
   useEffect(() => {
@@ -143,16 +145,29 @@ function InventarioScreen() {
     setGuardando(true);
     try {
       const db = await abrirBD();
-      await agregarProducto(db, nuevoNombre.trim(), parseInt(nuevaExistencia));
+      if (editandoId) {
+        // Si se está editando, se actualiza el producto en vez de crear uno nuevo
+        await actualizarProducto(db, editandoId, nuevoNombre.trim(), parseInt(nuevaExistencia));
+      } else {
+        await agregarProducto(db, nuevoNombre.trim(), parseInt(nuevaExistencia));
+      }
       const filas = await obtenerProductos(db);
       setProductos(filas);
       setNuevoNombre('');
       setNuevaExistencia('');
+      setEditandoId(null);
     } catch (error) {
       console.log('Error guardando producto:', error);
     } finally {
       setGuardando(false);
     }
+  }
+
+  // Cuando se toca Editar: el producto pasa al formulario para cambiarlo
+  function empezarEdicion(item) {
+    setEditandoId(item.id);
+    setNuevoNombre(item.nombre);
+    setNuevaExistencia(String(item.existencia));
   }
 
   // Cuando se toca Quitar: se borra de la base y se vuelve a cargar la lista
@@ -179,6 +194,14 @@ function InventarioScreen() {
         <Text style={styles.nombre}>{item.nombre}</Text>
         <Text style={styles.detalle}>Existencia: {item.existencia} und</Text>
       </View>
+      <Pressable
+        style={styles.botonQuitar}
+        onPress={() => empezarEdicion(item)}
+        accessibilityRole="button"
+        accessibilityLabel={`Editar ${item.nombre}`}
+      >
+        <Text style={styles.botonQuitarTexto}>Editar</Text>
+      </Pressable>
       <Pressable
         style={styles.botonQuitar}
         onPress={() => quitarProducto(item.id)}
@@ -244,7 +267,9 @@ function InventarioScreen() {
                 onPress={guardarNuevoProducto}
                 disabled={guardando}
               >
-                <Text style={styles.botonAgregarTexto}>{guardando ? '...' : '+ Agregar'}</Text>
+                <Text style={styles.botonAgregarTexto}>
+                  {guardando ? '...' : editandoId ? 'Guardar' : '+ Agregar'}
+                </Text>
               </Pressable>
             </View>
             <Text style={styles.contador}>

@@ -59,7 +59,17 @@ export async function agregarProducto(db, nombre, existencia) {
   );
 }
 
-// 6) Para borrar un producto, se busca por su id
+// 6) Para editar un producto que ya existe (nombre y existencia), se busca por su id
+export async function actualizarProducto(db, id, nombre, existencia) {
+  await db.runAsync(
+    'UPDATE productos SET nombre = ?, existencia = ? WHERE id = ?',
+    nombre,
+    existencia,
+    id
+  );
+}
+
+// 7) Para borrar un producto, se busca por su id
 export async function eliminarProducto(db, id) {
   await db.runAsync('DELETE FROM productos WHERE id = ?', id);
 }
